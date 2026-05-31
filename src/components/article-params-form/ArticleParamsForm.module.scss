@@ -29,4 +29,11 @@
 	display: flex;
 	justify-content: space-between;
 	margin-top: auto;
+	padding-top: 207px;
+}
+
+.option {
+	display: flex;
+	flex-direction: column;
+	gap: 50px;
 }

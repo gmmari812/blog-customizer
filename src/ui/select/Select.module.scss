@@ -63,6 +63,7 @@
 }
 
 .option {
+	position: relative; /* необходимо для корректной работы ::after */
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
@@ -78,7 +79,22 @@
 }
 
 .option:hover {
-	background: var(--grey, #c4c4c4);
+	background: #eeeeee;
+}
+
+.option:active {
+	background-color: #d7d7d7;
+}
+
+.option_disabled {
+	color: #999999;
+	background-color: #f5f5f5;
+	cursor: not-allowed;
+	opacity: 0.6;
+}
+
+.option:hover:not(.option_disabled) {
+	background-color: #f9f9f9;
 }
 
 @mixin option-color-before {
@@ -100,6 +116,24 @@
 	width: 17px;
 	height: 17px;
 	border-radius: 100%;
+}
+
+.option_shaded::after {
+	@include option-color-before;
+	position: absolute;
+	left: 16.5px;
+	z-index: 1;
+	background: repeating-linear-gradient(
+		-45deg,
+		/* Угол наклона (диагональные полосы) */ #787878 0,
+		/* Начало полосы, цвет #787878 */ #787878 1px,
+		/* Конец полосы (толщина = 1px) */ transparent 1px,
+		/* Начало промежутка */ transparent 3px
+			/* Конец промежутка (1px полоса + 2px промежуток = 3px шаг) */
+	);
+	border: 1px solid #787878;
+	opacity: 1;
+	pointer-events: none;
 }
 
 .option-black[data-selected='true']::after {

@@ -18,6 +18,7 @@ type SelectProps = {
 	onChange?: (selected: OptionType) => void;
 	onClose?: () => void;
 	title?: string;
+	isOptionDisabled?: (option: OptionType) => boolean; // новый
 };
 
 export const Select = (props: SelectProps) => {
@@ -84,15 +85,17 @@ export const Select = (props: SelectProps) => {
 				</div>
 				{isOpen && (
 					<ul className={styles.select} data-testid='selectDropdown'>
-						{options
-							.filter((option) => selected?.value !== option.value)
-							.map((option) => (
+						{options.map((option) => {
+							const isDisabled = props.isOptionDisabled?.(option) || false;
+							return (
 								<Option
 									key={option.value}
 									option={option}
-									onClick={() => handleOptionClick(option)}
+									isDisabled={isDisabled}
+									onClick={(value) => handleOptionClick({ ...option, value })}
 								/>
-							))}
+							);
+						})}
 					</ul>
 				)}
 			</div>
