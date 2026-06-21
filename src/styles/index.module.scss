@@ -1,4 +1,6 @@
 .main {
-	--bg-color: #ffffff;
-	background-color: var(--bg-color, #ffffff);
+	background-color: var(
+		--bg-color,
+		#ffffff
+	); /* оставляем только использование переменной */
 }
