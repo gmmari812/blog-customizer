@@ -62,13 +62,6 @@ export const ArticleParamsForm = ({
 		);
 	};
 
-	// Синхронизируем localState с currentState при его изменении
-	useEffect(() => {
-		if (!isMenuOpen) {
-			setLocalState(currentState);
-		}
-	}, [currentState]);
-
 	// Синхронизируем usedColors с currentState при открытии формы
 	useEffect(() => {
 		if (isMenuOpen) {
@@ -88,24 +81,21 @@ export const ArticleParamsForm = ({
 		e.preventDefault(); // Предотвращаем стандартную отправку формы
 		onApply(localState);
 		setIsMenuOpen(false);
-		console.log('Применяем', localState);
 	};
 
 	// Обработчик сброса настроек
 	const handleReset = () => {
 		setLocalState(defaultArticleState);
-		setUsedColors([]); // Очищаем список использованных цветов
+		setUsedColors([
+			defaultArticleState.fontColor.value,
+			defaultArticleState.backgroundColor.value,
+		]); // Очищаем список использованных цветов
 		onReset();
 	};
 
 	// Обработчик клика по кнопке-стрелке
 	const handleArrowClick = () => {
-		const newIsOpen = !isMenuOpen;
-		setIsMenuOpen(newIsOpen);
-		if (newIsOpen) {
-			// При открытии обновлем localState текущим состоянием
-			setLocalState(currentState);
-		}
+		setIsMenuOpen(!isMenuOpen);
 	};
 
 	return (
